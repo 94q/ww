@@ -425,7 +425,7 @@ function App() {
     },
     {
       title: 'chudvision.net',
-      description: 'chudvision.net - cheating software for multiple games started as "sexrust"',
+      description: 'chudvision.net - cheating software for multiple games started as "sexrust" | since 2020',
       href: 'https://chudvision.net/',
       image: '/assets/chud.png'
     },
@@ -456,35 +456,14 @@ function App() {
     {
       title: 'simland',
       description: 'simland - chatting & marketplace network for SEing* accessable via telegram since 2021',
-      href: '#',
+      href: 'https://t.me/shootout',
       image: '/assets/simland.jpg'
-    }
-  ];
-
-  const ethicalProjects = [
-    {
-      title: 'aieseu.ro',
-      description: 'aieseu.ro - romanian student friedly AI platform',
-      href: 'https://aieseu.ro',
-      image: '/assets/aieseu.png'
-    },
-    {
-      title: 'vocalagent.eu',
-      description: 'vocalagent.eu - AI netherlands start-up focused on automating voice-based tasks',
-      href: 'https://vocalagent.eu',
-      image: '/assets/vocalagent.png'
-    },
-    {
-      title: 'hound.ac',
-      description: 'hound.ac - unique clothing brand',
-      href: 'https://houndarchives.com/',
-      image: '/assets/hound.jpg'
     }
   ];
 
   return (
     <div className="min-h-screen relative">
-      <audio ref={audioRef} src="/assets/audio.mp3" />
+      <audio ref={audioRef} src="/assets/rose.mp3" />
 
       <button
         type="button"
@@ -545,7 +524,7 @@ function App() {
         {/* About Section */}
         <div className="text-center mb-8">
           <p className="text-sm text-white/70 mb-1">about</p>
-          <p className="text-sm text-white/90">i do everything</p>
+          <p className="text-sm text-white/90">expert in everything</p>
           <p className="text-xs text-white/60 mt-2">
             collaboration & business:{' '}
             <a
@@ -602,22 +581,6 @@ function App() {
             {projects.map((project, index) => (
               <ProjectCard
                 key={index}
-                title={project.title}
-                description={project.description}
-                image={project.image}
-                href={project.href}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Ethical Projects Section */}
-        <div className="text-center mt-12">
-          <h2 className="text-2xl font-bold mb-6 text-white">ethical projects</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {ethicalProjects.map((project, index) => (
-              <ProjectCard
-                key={`ethical-${index}`}
                 title={project.title}
                 description={project.description}
                 image={project.image}
