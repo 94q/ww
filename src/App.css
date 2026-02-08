@@ -36,6 +36,40 @@
   animation: loader-flicker 1.8s ease-in-out infinite;
 }
 
+.loader-exit {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  animation: loader-exit 700ms ease forwards;
+}
+
+.enter-button {
+  background: transparent;
+  border: none;
+  color: #f5f5f5;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+.enter-button:hover {
+  opacity: 0.85;
+}
+
+@keyframes loader-exit {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
 .app-shell {
   opacity: 0;
   transform: translateY(6px);
@@ -82,4 +116,27 @@
 
 .logo-shift {
   transform: translateX(22px);
+}
+
+.audio-toggle {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+
+.audio-toggle:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.95);
 }

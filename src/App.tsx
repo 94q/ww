@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import blinkies from './blinkies';
-import { Github, Mail, Key } from 'lucide-react';
+import { Github, Mail, Key, Volume2, VolumeX } from 'lucide-react';
 
 // Starfield Component
 const Starfield = () => {
@@ -374,11 +374,41 @@ const BlinkiesSection = () => {
 // Main App Component
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
+  const [hasEntered, setHasEntered] = useState(false);
+  const [showEnter, setShowEnter] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1400);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (isLoading) return;
+    const timer = setTimeout(() => setShowEnter(true), 700);
+    return () => clearTimeout(timer);
+  }, [isLoading]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.muted = false;
+    audio.loop = true;
+    audio.volume = 0.5;
+  }, []);
+
+  const handleEnter = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.muted = isMuted;
+      audio.play().catch(() => {
+        // Autoplay is blocked without user interaction.
+      });
+    }
+    setHasEntered(true);
+  };
 
   const projects = [
     {
@@ -454,21 +484,50 @@ function App() {
 
   return (
     <div className="min-h-screen relative">
-      <div
-        className={`site-loader ${isLoading ? '' : 'is-hidden'}`}
-        role="status"
-        aria-live="polite"
-        aria-hidden={!isLoading}
+      <audio ref={audioRef} src="/assets/audio.mp3" />
+
+      <button
+        type="button"
+        className="audio-toggle"
+        onClick={() => {
+          const nextMuted = !isMuted;
+          setIsMuted(nextMuted);
+          if (audioRef.current) {
+            audioRef.current.muted = nextMuted;
+          }
+        }}
+        aria-label={isMuted ? 'Unmute background audio' : 'Mute background audio'}
       >
-        <div className="loader-core" />
-        <div className="loader-text">entering</div>
+        {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+      </button>
+
+      <div
+        className={`site-loader ${isLoading || !hasEntered ? '' : 'is-hidden'}`}
+        role="dialog"
+        aria-live="polite"
+        aria-hidden={!(isLoading || !hasEntered)}
+      >
+        {isLoading && (
+          <>
+            <div className="loader-core" />
+            <div className="loader-text">loading...</div>
+          </>
+        )}
+
+        {!isLoading && !showEnter && <div className="loader-exit" />}
+
+        {!isLoading && showEnter && (
+          <button type="button" className="enter-button" onClick={handleEnter}>
+            [enter]
+          </button>
+        )}
       </div>
 
       <Starfield />
       <BloodDrips />
       <SideLines />
 
-      <div className={`app-shell relative z-20 max-w-4xl mx-auto px-4 py-12 ${isLoading ? 'is-loading' : 'is-ready'}`}>
+      <div className={`app-shell relative z-20 max-w-4xl mx-auto px-4 py-12 ${isLoading || !hasEntered ? 'is-loading' : 'is-ready'}`}>
         {/* Logo Section */}
         <GothicLogo />
 
